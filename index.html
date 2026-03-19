@@ -305,7 +305,7 @@ async function loadMainPost() {
 
 // NEWS
 async function loadHomepageNews() {
-    const container = dfor (let i = 1; i <= 5; i++) {
+    const container = for (let i = 1; i <= 5; i++) {
   const snap = await getDoc(doc(db, "homepageNews", String(i)));
   if (snap.exists()) {
     const data = snap.data();
