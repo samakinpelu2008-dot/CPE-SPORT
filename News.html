@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>News</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:white;
+}
+
+/* HEADER */
+.header{
+    background:red;
+    color:white;
+    padding:15px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+/* CONTENT */
+.container{
+    padding:15px;
+}
+
+.news-image{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.news-title{
+    margin-top:15px;
+    font-size:22px;
+    font-weight:bold;
+    color:red;
+}
+
+.news-text{
+    margin-top:10px;
+    font-size:16px;
+    line-height:1.5;
+    color:#333;
+}
+
+/* BACK BUTTON */
+.back{
+    display:inline-block;
+    margin-bottom:10px;
+    color:red;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">News</div>
+
+<div class="container">
+
+    <div class="back" onclick="goBack()">← Back</div>
+
+    <img id="image" class="news-image">
+    <div id="title" class="news-title"></div>
+    <div id="text" class="news-text"></div>
+
+</div>
+
+<script>
+function goBack(){
+    window.history.back();
+}
+</script>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCXEwNI2pRGtT_68xhTU7c5McUdz2HL8",
+    authDomain: "cpe--football.firebaseapp.com",
+    projectId: "cpe--football",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// GET ID FROM URL
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// LOAD NEWS
+async function loadNews(){
+
+    if(!id){
+        document.getElementById("title").innerText = "No news selected";
+        return;
+    }
+
+    const snap = await getDoc(doc(db, "homepageNews", id));
+
+    if(snap.exists()){
+        const data = snap.data();
+
+        document.getElementById("image").src = data.image;
+        document.getElementById("title").innerText = data.title;
+        document.getElementById("text").innerText = data.text;
+    } else {
+        document.getElementById("title").innerText = "News not found";
+    }
+}
+
+loadNews();
+
+</script>
+
+</body>
+</html>
