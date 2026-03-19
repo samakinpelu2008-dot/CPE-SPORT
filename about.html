@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>About - CPE Sports</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body{
+            margin:0;
+            font-family:'Poppins', sans-serif;
+            background:white;
+            padding-top:70px;
+        }
+
+        /* BANNER */
+        .banner{
+            background:red;
+            padding:5px 10px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            height:60px;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            z-index:1000;
+        }
+
+        .menu-icon{
+            font-size:40px;
+            cursor:pointer;
+        }
+
+        .profile img{
+            border-radius:50%;
+        }
+
+        /* MENU */
+        .overlay{
+            position:fixed;
+            width:100%;
+            height:100%;
+            background:red;
+            display:none;
+            z-index:3000;
+        }
+
+        .overlay.show{
+            display:block;
+        }
+
+        .overlay-content{
+            margin-top:80px;
+            padding-left:20px;
+        }
+
+        .overlay-content a{
+            display:block;
+            color:white;
+            font-size:20px;
+            font-weight:bold;
+            margin:15px 0;
+            text-decoration:none;
+        }
+
+        .close-btn{
+            position:absolute;
+            top:15px;
+            left:15px;
+            font-size:20px;
+            cursor:pointer;
+        }
+
+        .line{
+            border:1px solid white;
+        }
+
+        /* SECTIONS */
+        .section{
+            padding:20px 15px;
+        }
+
+        .section.red{
+            background:red;
+            color:white;
+        }
+
+        .section.white{
+            background:white;
+            color:black;
+        }
+
+        h1{
+            margin:0;
+            font-size:28px;
+        }
+
+        h2{
+            margin-bottom:10px;
+        }
+
+        p{
+            line-height:1.6;
+        }
+
+        /* FEATURES */
+        .features{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:10px;
+        }
+
+        .feature-box{
+            background:#eee;
+            padding:10px;
+            border-radius:6px;
+            font-weight:bold;
+            text-align:center;
+        }
+
+        /* FOOTER */
+        footer{
+            background:#F88379;
+            color:white;
+            padding:30px 15px;
+            text-align:center;
+        }
+
+        .social-icons a{
+            margin:0 8px;
+            color:white;
+            font-size:22px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- BANNER -->
+<div class="banner">
+    <div class="menu-icon" onclick="toggleMenu()">&#8801;</div>
+
+    <div>
+        <img src="images/Logo.png" height="50">
+    </div>
+
+    <div class="profile">
+        <img src="images/Profile.jpg" width="50" height="50">
+    </div>
+</div>
+
+<!-- MENU -->
+<div class="overlay" id="overlay">
+    <div class="close-btn" onclick="toggleMenu()">✖</div>
+    <div class="overlay-content">
+        <a href="homepage.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a herf="tv.html">CpeTv</a>
+        <a href="teams.html">TEAM</a>
+        <a href="fixture.html">FIXTURES & RESULTS</a>
+      <a href="account.html">ACCOUNT</a>
+        <a href="news-list.html">NEWS</a>
+        <a href="shop.html">SHOP</a>
+      <a href="girls.html">GIRLS</a>
+      <a href="album.html">SPORT ALBUM</a>
+      <a href="predict.html">CPE PREDICT</a>
+      <a href="join.html">JOIN</a>
+      <a href="records.html">TEAM RECORDS</a>
+      
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="section red">
+    <h1>About CPE Sports</h1>
+    <p>
+        The official digital platform for sports in the Computer Engineering Department,
+        with a strong focus on football and a growing coverage of other sports.
+    </p>
+</div>
+
+<!-- ABOUT PLATFORM -->
+<div class="section white">
+    <h2>What This Platform Is</h2>
+    <p>
+        CPE Sports is designed to bring all sporting activities in the department into one place.
+        From match fixtures and results to breaking news and updates, this platform ensures that
+        every student stays connected to what’s happening.
+    </p>
+</div>
+
+<!-- VISION -->
+<div class="section red">
+    <h2>Our Vision</h2>
+    <p>
+        Our goal is to build a complete sports hub for the department — starting with football,
+        which makes up over 80% of activities, while also expanding into other sports over time.
+    </p>
+</div>
+
+<!-- FEATURES -->
+<div class="section white">
+    <h2>What We Offer</h2>
+
+    <div class="features">
+        <div class="feature-box">Fixtures & Results</div>
+        <div class="feature-box">Latest News</div>
+        <div class="feature-box">Football Updates</div>
+        <div class="feature-box">Other Sports Coverage</div>
+        <div class="feature-box">Match Reports</div>
+        <div class="feature-box">Fan Engagement</div>
+    </div>
+</div>
+
+<!-- TEAM -->
+<div class="section red">
+    <h2>The Department</h2>
+    <p>
+        This platform represents the Computer Engineering Department and its sporting culture.
+        It is built to improve communication, engagement, and participation among students.
+    </p>
+</div>
+
+<!-- DEVELOPER -->
+<div class="section white">
+    <h2>Developer</h2>
+    <p>
+        Developed and maintained by <strong>Samuel Akinpelu</strong>,  
+        focused on building modern digital solutions for student communities.
+    </p>
+</div>
+
+<!-- CONTACT -->
+<div class="section red">
+    <h2>Contact</h2>
+    <p>Email: cpesports@gmail.com</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <img src="images/logo.png" height="70"><br><br>
+
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+    </div>
+
+    <p style="margin-top:15px;">CPE Sports © 2025</p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+function toggleMenu(){
+    document.getElementById("overlay").classList.toggle("show");
+}
+</script>
+
+</body>
+</html>
