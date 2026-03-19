@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Home Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* CARD STYLE */
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: red;
+}
+
+/* INPUTS */
+input, textarea, select {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- MAIN POST -->
+    <div class="card">
+        <h2>Main Post</h2>
+
+        <input type="text" id="mainTitle" placeholder="Title">
+        <input type="text" id="mainImage" placeholder="Image URL">
+        <textarea id="mainText" placeholder="Main Text"></textarea>
+
+        <button onclick="saveMainPost()">Save Main Post</button>
+    </div>
+
+    <!-- HOMEPAGE NEWS -->
+    <div class="card">
+        <h2>Homepage News (1–5)</h2>
+
+        <select id="newsPosition">
+            <option value="1">1st News</option>
+            <option value="2">2nd News</option>
+            <option value="3">3rd News</option>
+            <option value="4">4th News</option>
+            <option value="5">5th News</option>
+        </select>
+
+        <input type="text" id="newsTitle" placeholder="News Title">
+        <input type="text" id="newsImage" placeholder="Image URL">
+        <textarea id="newsText" placeholder="News Text"></textarea>
+
+        <button onclick="updateNews()">Post News</button>
+    </div>
+
+</div>
+
+<h2>Fixtures & Results</h2>
+
+<!-- NEXT FIXTURE -->
+<h3>Next Fixture</h3>
+<input type="text" id="team1" placeholder="Team 1 Name">
+<input type="text" id="team2" placeholder="Team 2 Name">
+<input type="text" id="team1Logo" placeholder="Team 1 Logo URL">
+<input type="text" id="team2Logo" placeholder="Team 2 Logo URL">
+<input type="text" id="matchTime" placeholder="Time (e.g 16:30)">
+<input type="text" id="matchDate" placeholder="Date (e.g Sun 22 Mar)">
+<input type="text" id="competition" placeholder="Competition">
+
+<button onclick="saveNextFixture()">Save Next Fixture</button>
+
+<br><br>
+
+<!-- LAST RESULT -->
+<h3>Last Result</h3>
+<input type="text" id="rTeam1" placeholder="Team 1 Name">
+<input type="text" id="rTeam2" placeholder="Team 2 Name">
+<input type="number" id="score1" placeholder="Score 1">
+<input type="number" id="score2" placeholder="Score 2">
+<input type="text" id="rDate" placeholder="Date">
+<input type="text" id="rCompetition" placeholder="Competition">
+
+<button onclick="saveLastResult()">Save Result</button>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCXEwNI2pRGtT_68xhTU7c5McUdz2HL8",
+    authDomain: "cpe--football.firebaseapp.com",
+    projectId: "cpe--football",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+/* MAIN POST */
+window.saveMainPost = async function() {
+
+    const title = document.getElementById("mainTitle").value;
+    const text = document.getElementById("mainText").value;
+    const image = document.getElementById("mainImage").value;
+
+    if (!title || !text || !image) {
+        alert("Fill all fields");
+        return;
+    }
+
+    await setDoc(doc(db, "news", "main"), {
+        title,
+        text,
+        image
+    });
+
+    alert("Main post updated!");
+};
+
+
+/* HOMEPAGE NEWS */
+window.updateNews = async function() {
+
+    const position = document.getElementById("newsPosition").value;
+
+    const title = document.getElementById("newsTitle").value;
+    const text = document.getElementById("newsText").value;
+    const image = document.getElementById("newsImage").value;
+
+    if (!title || !text || !image) {
+        alert("Fill all fields");
+        return;
+    }
+
+    await setDoc(doc(db, "homepageNews", position), {
+        title,
+        text,
+        image
+    });
+
+    alert("News updated!");
+};
+
+
+// ✅ SAVE NEXT FIXTURE
+window.saveNextFixture = async function() {
+
+  await setDoc(doc(db, "fixtures", "next"), {
+    team1: document.getElementById("team1").value,
+    team2: document.getElementById("team2").value,
+    team1Logo: document.getElementById("team1Logo").value,
+    team2Logo: document.getElementById("team2Logo").value,
+    time: document.getElementById("matchTime").value,
+    date: document.getElementById("matchDate").value,
+    competition: document.getElementById("competition").value
+  });
+
+  alert("Next Fixture Saved!");
+};
+
+// ✅ SAVE LAST RESULT
+window.saveLastResult = async function() {
+
+  await setDoc(doc(db, "fixtures", "last"), {
+    team1: document.getElementById("rTeam1").value,
+    team2: document.getElementById("rTeam2").value,
+    score1: document.getElementById("score1").value,
+    score2: document.getElementById("score2").value,
+    date: document.getElementById("rDate").value,
+    competition: document.getElementById("rCompetition").value
+  });
+
+  alert("Result Saved!");
+};
+</script>
+
+</body>
+</html>
