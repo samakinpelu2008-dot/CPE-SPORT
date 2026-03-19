@@ -307,18 +307,25 @@ async function loadMainPost() {
 async function loadHomepageNews() {
     const container = document.getElementById("newsContainer");
     container.innerHTML = "";
-    for (let i = 1; i <= 5; i++) {
-        const snap = await getDoc(doc(db, "homepageNews", String(i)));
-        if (snap.exists()) {
-            const data = snap.data();
-            container.innerHTML += `
-                <div class="news-item" onclick="openNews(${i})">
-                    <img src="${data.image}">
-                    <div class="news-text"><h3>${data.title}</h3></div>
-                </div>
-            `;
-        }
-    }
+    import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+async function loadHomepageNews() {
+  const container = document.getElementById("newsContainer");
+  container.innerHTML = "";
+
+  // Fetch all news items at once
+  const querySnapshot = await getDocs(collection(db, "homepageNews"));
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    container.innerHTML += `
+      <div class="news-item" onclick="openNews('${doc.id}')">
+        <img src="${data.image}" loading="lazy">
+        <h3>${data.title}</h3>
+      </div>
+    `;
+  });
+}
 }
 window.openNews = (id) => { window.location.href = "news.html?id=" + id; };
 
