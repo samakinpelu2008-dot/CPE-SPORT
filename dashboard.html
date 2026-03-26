@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPE Sport - Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f2f2f2;
+}
+
+/* CARD */
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* LOGO */
+.logo img {
+    width: 70px;
+    margin-bottom: 15px;
+}
+
+/* USER INFO */
+h2 {
+    color: red;
+    margin-bottom: 15px;
+}
+
+.info {
+    text-align: left;
+    margin: 15px 0;
+    font-size: 16px;
+}
+
+.info span {
+    font-weight: bold;
+    color: red;
+}
+
+/* BUTTONS */
+button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: darkred;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">
+        <img src="images/Logo.png" alt="CPE Sport">
+    </div>
+
+    <h2>Account Dashboard</h2>
+
+    <div class="info">Username: <span id="username">Loading...</span></div>
+    <div class="info">Email: <span id="email">Loading...</span></div>
+    <div class="info">E.T.C: <span id="etc">N/A</span></div>
+
+    <button onclick="goToChat()">Go to Chat</button>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyCXEwNI2pRGt5tN_68xhTU7c5McUdz2HL8",
+  authDomain: "cpe--football.firebaseapp.com",
+  projectId: "cpe--football",
+  storageBucket: "cpe--football.firebasestorage.app",
+  messagingSenderId: "986780347918",
+  appId: "1:986780347918:web:eb427cf5dd652cdae6565f"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Check login state
+onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+        // Not logged in → redirect to account page
+        window.location.href = "account.html";
+        return;
+    }
+
+    // Load user info from Firestore
+    const userSnap = await getDoc(doc(db, "users", user.uid));
+    if (userSnap.exists()) {
+        const data = userSnap.data();
+        document.getElementById("username").innerText = data.username || "N/A";
+        document.getElementById("email").innerText = data.email || user.email;
+        document.getElementById("etc").innerText = data.etc || "N/A"; // Placeholder for extra info
+    } else {
+        // User exists in Auth but not Firestore
+        document.getElementById("username").innerText = "N/A";
+        document.getElementById("email").innerText = user.email;
+    }
+});
+
+// Logout function
+window.logout = async function() {
+    await signOut(auth);
+    window.location.href = "account.html";
+};
+
+// Go to chat
+window.goToChat = function() {
+    window.location.href = "chat.html";
+};
+</script>
+</body>
+</html>
