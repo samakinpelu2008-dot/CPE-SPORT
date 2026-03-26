@@ -260,10 +260,8 @@
             <img src="images/Logo.png" height="50" alt="Logo">
         </div>
         <div class="profile">
-            <a href="account.html">
-                <img src="images/Profile.jpg" width="50" height="50" alt="Profile">
-            </a>
-        </div>
+    <img src="images/Profile.jpg" width="50" height="50" alt="Profile" style="cursor:pointer;" onclick="openAccount()">
+</div>
     </div>
 
     <!-- MENU -->
@@ -431,7 +429,34 @@
         loadHomepageNews();
         loadFixtures();
     </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+const firebaseConfig = {
+  apiKey: "PASTE_CORRECT_KEY",
+  authDomain: "cpe--football.firebaseapp.com",
+  projectId: "cpe--football",
+  storageBucket: "cpe--football.firebasestorage.app",
+  messagingSenderId: "986780347918",
+  appId: "1:986780347918:web:eb427cf5dd652cdae6565f"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Function called when profile icon is clicked
+window.openAccount = function() {
+    const user = auth.currentUser;
+    if (user) {
+        // Already logged in → go to dashboard
+        window.location.href = "dashboard.html";
+    } else {
+        // Not logged in → go to login/signup
+        window.location.href = "account.html";
+    }
+};
+</script>
     <!-- FOOTER -->
     <footer>
         <div style="text-align:center;">
