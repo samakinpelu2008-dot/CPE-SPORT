@@ -260,8 +260,10 @@
             <img src="images/Logo.png" height="50" alt="Logo">
         </div>
         <div class="profile">
-    <img src="images/Profile.jpg" width="50" height="50" alt="Profile" style="cursor:pointer;" onclick="openAccount()">
+    <div class="profile">
+    <img src="images/Profile.jpg" width="50" height="50" alt="Profile" style="cursor:pointer;" id="profileIcon">
 </div>
+
     </div>
 
     <!-- MENU -->
@@ -277,7 +279,7 @@
             <a href="tv.html">CpeTV</a>
             <a href="team.html">TEAM</a>
             <a href="fixtures.html">FIXTURES & RESULTS</a>
-            <a href="account.html">ACCOUNT</a>
+            <a href="#" id="hamburgerAccount">ACCOUNT</a>
             <a href="shop.html">SHOP</a>
             <a href="girls.html">GIRLS</a>
             <a href="album.html">SPORT ALBUM</a>
@@ -430,11 +432,12 @@
         loadFixtures();
     </script>
 <script type="module">
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "PASTE_CORRECT_KEY",
+  apiKey: "AIzaSyCXEwNI2pRGt5tN_68xhTU7c5McUdz2HL8",
   authDomain: "cpe--football.firebaseapp.com",
   projectId: "cpe--football",
   storageBucket: "cpe--football.firebasestorage.app",
@@ -445,17 +448,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Function called when profile icon is clicked
-window.openAccount = function() {
+    <script type="module">
+const hamburgerAccount = document.getElementById("hamburgerAccount");
+hamburgerAccount.addEventListener("click", (e) => {
+    e.preventDefault(); // prevent default static link
     const user = auth.currentUser;
     if (user) {
-        // Already logged in → go to dashboard
         window.location.href = "dashboard.html";
     } else {
-        // Not logged in → go to login/signup
         window.location.href = "account.html";
     }
-};
+});
+</script>
+
+// Attach click handler
+document.getElementById("profileIcon").addEventListener("click", () => {
+    const user = auth.currentUser;
+    if (user) {
+        window.location.href = "dashboard.html";
+    } else {
+        window.location.href = "account.html";
+    }
+});
 </script>
     <!-- FOOTER -->
     <footer>
